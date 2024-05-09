@@ -46,16 +46,6 @@ size = Vector3(17, 1, 17)
 script = ExtResource("1_blrvs")
 falling_scene = ExtResource("4_yd8ee")
 
-[node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("BoxShape3D_7ajaa")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("BoxMesh_g261f")
-
 [node name="Player" parent="." instance=ExtResource("1_1xadd")]
 
 [node name="CameraPivot2" type="Marker3D" parent="Player"]
@@ -64,71 +54,87 @@ script = ExtResource("2_mlohh")
 [node name="Camera3D" type="Camera3D" parent="Player/CameraPivot2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 3)
 
-[node name="Table1" parent="." instance=ExtResource("1_hykti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
-
-[node name="Table2" parent="." instance=ExtResource("1_hykti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
-
-[node name="Table3" parent="." instance=ExtResource("1_hykti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
-
-[node name="Table4" parent="." instance=ExtResource("1_hykti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
-
 [node name="FallingTimer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
 
-[node name="Wall1" type="StaticBody3D" parent="."]
+[node name="Tables" type="Node3D" parent="."]
+
+[node name="Table1" parent="Tables" instance=ExtResource("1_hykti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+
+[node name="Table2" parent="Tables" instance=ExtResource("1_hykti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="Table3" parent="Tables" instance=ExtResource("1_hykti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="Table4" parent="Tables" instance=ExtResource("1_hykti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="Boundary" type="Node3D" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="Boundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundary/Ground"]
+shape = SubResource("BoxShape3D_7ajaa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Ground"]
+mesh = SubResource("BoxMesh_g261f")
+
+[node name="Wall1" type="StaticBody3D" parent="Boundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall1"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundary/Wall1"]
 shape = SubResource("BoxShape3D_kw0go")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall1"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Wall1"]
 mesh = SubResource("BoxMesh_a3115")
 
-[node name="Wall2" type="StaticBody3D" parent="."]
+[node name="Wall2" type="StaticBody3D" parent="Boundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundary/Wall2"]
 shape = SubResource("BoxShape3D_kw0go")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Wall2"]
 mesh = SubResource("BoxMesh_a3115")
 
-[node name="Wall3" type="StaticBody3D" parent="."]
+[node name="Wall3" type="StaticBody3D" parent="Boundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundary/Wall3"]
 shape = SubResource("BoxShape3D_muhxh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall3"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Wall3"]
 mesh = SubResource("BoxMesh_rwscm")
 
-[node name="Wall4" type="StaticBody3D" parent="."]
+[node name="Wall4" type="StaticBody3D" parent="Boundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -8)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall4"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundary/Wall4"]
 shape = SubResource("BoxShape3D_muhxh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall4"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Wall4"]
 mesh = SubResource("BoxMesh_rwscm")
 
-[node name="Ceiling" type="StaticBody3D" parent="."]
+[node name="Ceiling" type="StaticBody3D" parent="Boundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceiling"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boundary/Ceiling"]
 shape = SubResource("BoxShape3D_k7r0p")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ceiling"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Ceiling"]
 mesh = SubResource("BoxMesh_7ptd3")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lights"]
 transform = Transform3D(0.5, -0.75, 0.433013, 0, 0.5, 0.866025, -0.866025, -0.433013, 0.25, 6, 3.5, 6)
 
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Lights"]
 transform = Transform3D(0.5, -0.75, -0.433013, 0, -0.5, 0.866025, -0.866025, -0.433013, -0.25, -6, 3.5, -6)
 
 [connection signal="timeout" from="FallingTimer" to="." method="_on_falling_timer_timeout"]
