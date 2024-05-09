@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdjenfp8kn6u2"]
+
+[ext_resource type="Script" path="res://falling_thing.gd" id="1_gbc3u"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5eg6t"]
+radius = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06fju"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qacps"]
+material = SubResource("StandardMaterial3D_06fju")
+radius = 0.2
+height = 0.4
+
+[node name="FallingThing" type="RigidBody3D"]
+script = ExtResource("1_gbc3u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_5eg6t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_qacps")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
