@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dc73l1rm1ebsg"]
+[gd_scene load_steps=18 format=3 uid="uid://dc73l1rm1ebsg"]
 
 [ext_resource type="PackedScene" uid="uid://b1qs0xiynwe8u" path="res://player.tscn" id="1_1xadd"]
 [ext_resource type="Script" path="res://main.gd" id="1_blrvs"]
@@ -42,6 +42,9 @@ albedo_color = Color(0.721828, 0.999198, 1, 1)
 material = SubResource("StandardMaterial3D_jqqbh")
 size = Vector3(17, 1, 17)
 
+[sub_resource type="Theme" id="Theme_g4in4"]
+default_font_size = 22
+
 [node name="Main" type="Node"]
 script = ExtResource("1_blrvs")
 falling_scene = ExtResource("4_yd8ee")
@@ -53,10 +56,6 @@ script = ExtResource("2_mlohh")
 
 [node name="Camera3D" type="Camera3D" parent="Player/CameraPivot2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 3)
-
-[node name="FallingTimer" type="Timer" parent="."]
-wait_time = 0.1
-autostart = true
 
 [node name="Tables" type="Node3D" parent="."]
 
@@ -137,4 +136,44 @@ transform = Transform3D(0.5, -0.75, 0.433013, 0, 0.5, 0.866025, -0.866025, -0.43
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Lights"]
 transform = Transform3D(0.5, -0.75, -0.433013, 0, -0.5, 0.866025, -0.866025, -0.433013, -0.25, -6, 3.5, -6)
 
-[connection signal="timeout" from="FallingTimer" to="." method="_on_falling_timer_timeout"]
+[node name="Timers" type="Node3D" parent="."]
+
+[node name="FallingTimer" type="Timer" parent="Timers"]
+wait_time = 0.1
+
+[node name="GameDurationTimer" type="Timer" parent="Timers"]
+wait_time = 61.0
+one_shot = true
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g4in4")
+
+[node name="TimeLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 890.0
+offset_top = 21.0
+offset_right = 1120.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+text = "Elapesed Time: 0s"
+horizontal_alignment = 2
+
+[node name="ElapsedTimer" type="Timer" parent="UserInterface"]
+
+[node name="LifeLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 21.0
+offset_right = 79.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Life: 3"
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="Timers/FallingTimer" to="." method="_on_falling_timer_timeout"]
+[connection signal="timeout" from="Timers/GameDurationTimer" to="." method="_on_game_duration_timer_timeout"]
+[connection signal="timeout" from="UserInterface/ElapsedTimer" to="." method="_on_elapsed_timer_timeout"]

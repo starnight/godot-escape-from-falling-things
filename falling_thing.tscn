@@ -13,7 +13,7 @@ material = SubResource("StandardMaterial3D_06fju")
 radius = 0.2
 height = 0.4
 
-[node name="FallingThing" type="RigidBody3D"]
+[node name="FallingThing" type="RigidBody3D" groups=["fallings"]]
 script = ExtResource("1_gbc3u")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

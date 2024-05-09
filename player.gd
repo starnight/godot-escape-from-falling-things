@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal hit
+
 # How fast the player moves in meters per second.
 @export var speed = 2
 var target_velocity = Vector3.ZERO
@@ -30,3 +32,23 @@ func _physics_process(delta):
 	# Moving the Character
 	velocity = target_velocity
 	move_and_slide()
+
+	if _is_hit():
+		get_hit()
+
+func _is_hit():
+	for index in range(get_slide_collision_count()):
+		var collision = get_slide_collision(index)
+		# If the collision is with ground
+		if collision.get_collider() == null:
+			continue
+
+		# If the collider is with a falling
+		if collision.get_collider().is_in_group("fallings"):
+			var col = collision.get_normal()
+			if Vector3.UP.dot(col) > -0.1:
+				return true
+	return false
+
+func get_hit():
+	hit.emit()
