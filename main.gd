@@ -5,17 +5,19 @@ extends Node
 var elapsed_time = 0
 var life = 3
 
-func _reset_game():
+func reset_game():
 	elapsed_time = 0
 	life = 3
 	$UserInterface/TimeLabel.text = "Elapsed Time: %ds" % elapsed_time
 	$UserInterface/LifeLabel.text = "Life: %d" % life
+	$UserInterface/Retry.hide()
 	$Timers/GameDurationTimer.start(0)
 	$UserInterface/ElapsedTimer.start(0)
 	$Timers/FallingTimer.start(0)
 
-func _ready():
-	_reset_game()
+func _process(delta):
+	if Input.is_action_pressed("enter_game") and $UserInterface/Retry.visible:
+		reset_game()
 
 func _on_falling_timer_timeout():
 	var falling = falling_scene.instantiate()
@@ -32,6 +34,8 @@ func _on_elapsed_timer_timeout():
 func stop_game():
 	$Timers/FallingTimer.stop()
 	$UserInterface/ElapsedTimer.stop()
+	$UserInterface/Retry/Label.text = "Press Enter to retry."
+	$UserInterface/Retry.show()
 
 func _on_game_duration_timer_timeout():
 	stop_game()
@@ -41,3 +45,8 @@ func _on_player_hit():
 	$UserInterface/LifeLabel.text = "Life: %d" % life
 	if life <= 0:
 		stop_game()
+
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_accept") and $UserInterface/Retry.visible:
+		# This restarts the current scene.
+		get_tree().reload_current_scene()
