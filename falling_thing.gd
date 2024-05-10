@@ -9,3 +9,6 @@ func _process(delta):
 
 func _on_timer_timeout():
 	queue_free()
+
+func trigger_vanish_timer():
+	$Timer.start(0)

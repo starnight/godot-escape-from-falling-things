@@ -5,6 +5,7 @@ signal hit
 # How fast the player moves in meters per second.
 @export var speed = 2
 var target_velocity = Vector3.ZERO
+var invincible = false
 
 func _physics_process(delta):
 	# We create a local variable to store the input direction.
@@ -46,9 +47,18 @@ func _is_hit():
 		# If the collider is with a falling
 		if collision.get_collider().is_in_group("fallings"):
 			var col = collision.get_normal()
-			if Vector3.UP.dot(col) > -0.1:
+			if Vector3.UP.dot(col) < -0.1 and !invincible:
+				invincible = true
+				$InvincibleTimer.start(0)
+				var falling = collision.get_collider()
+				falling.trigger_vanish_timer()
 				return true
+			else:
+				return false
 	return false
 
 func get_hit():
 	hit.emit()
+
+func _on_invincible_timer_timeout():
+	invincible = false

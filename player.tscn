@@ -21,3 +21,9 @@ shape = SubResource("BoxShape3D_mwsdu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_gn6ax")
+
+[node name="InvincibleTimer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[connection signal="timeout" from="InvincibleTimer" to="." method="_on_invincible_timer_timeout"]
