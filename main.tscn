@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dc73l1rm1ebsg"]
+[gd_scene load_steps=19 format=3 uid="uid://dc73l1rm1ebsg"]
 
 [ext_resource type="PackedScene" uid="uid://b1qs0xiynwe8u" path="res://player.tscn" id="1_1xadd"]
 [ext_resource type="Script" path="res://main.gd" id="1_blrvs"]
@@ -9,7 +9,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_7ajaa"]
 size = Vector3(60, 1, 60)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6rt4d"]
+albedo_color = Color(0.154876, 0.154876, 0.154876, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_g261f"]
+material = SubResource("StandardMaterial3D_6rt4d")
 size = Vector3(60, 1, 60)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kw0go"]
@@ -76,7 +80,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
 
 [node name="Ground" type="StaticBody3D" parent="Boundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Boundary/Ground"]
 shape = SubResource("BoxShape3D_7ajaa")
@@ -127,7 +130,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
 shape = SubResource("BoxShape3D_k7r0p")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Ceiling"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.642541, -0.499094, -5.91844)
 mesh = SubResource("BoxMesh_7ptd3")
 
 [node name="Lights" type="Node3D" parent="."]
@@ -158,13 +160,15 @@ theme = SubResource("Theme_g4in4")
 
 [node name="TimeLabel" type="Label" parent="UserInterface"]
 layout_mode = 0
-offset_left = 890.0
-offset_top = 21.0
-offset_right = 1120.0
-offset_bottom = 52.0
+anchor_left = 0.772569
+anchor_top = 0.0324074
+anchor_right = 0.972222
+anchor_bottom = 0.0802469
 theme_override_colors/font_color = Color(0, 0, 1, 1)
 text = "Elapesed Time: 0s"
 horizontal_alignment = 2
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="ElapsedTimer" type="Timer" parent="UserInterface"]
 
