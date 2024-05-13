@@ -50,3 +50,8 @@ func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept") and $UserInterface/Retry.visible:
 		# This restarts the current scene.
 		get_tree().reload_current_scene()
+
+
+func _on_shake_timer_timeout():
+	%ShakeTimer.start(3.0 + 3.0 * randf())  # between 3 and 6 seconds
+	%Camera3D.add_stress(0.2 + 0.2 * randf())  # between 0.2 and 0.4
