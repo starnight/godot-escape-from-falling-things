@@ -23,6 +23,8 @@ func _physics_process(delta):
 	if Input.is_action_pressed("move_forward"):
 		direction.z -= 1
 	
+	direction = direction.rotated(Vector3.UP, $CameraPivot2.rotation.y)
+
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
 	
