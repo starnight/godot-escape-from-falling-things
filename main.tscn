@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c0qkufevdka6i" path="res://table.tscn" id="1_hykti"]
 [ext_resource type="Script" path="res://CameraPivot2.gd" id="2_mlohh"]
 [ext_resource type="PackedScene" uid="uid://cdjenfp8kn6u2" path="res://falling_thing.tscn" id="4_yd8ee"]
-[ext_resource type="Script" path="res://Camera3D.gd" id="5_2pxol"]
+[ext_resource type="Script" path="res://Boundary.gd" id="7_s1d1q"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7ajaa"]
 size = Vector3(60, 1, 60)
@@ -54,32 +54,8 @@ default_font_size = 22
 script = ExtResource("1_blrvs")
 falling_scene = ExtResource("4_yd8ee")
 
-[node name="Player" parent="." instance=ExtResource("1_1xadd")]
-
-[node name="CameraPivot2" type="Marker3D" parent="Player"]
-transform = Transform3D(0.953717, 0, 0.300706, 0, 1, 0, -0.300706, 0, 0.953717, 0, 0, 0)
-script = ExtResource("2_mlohh")
-
-[node name="Camera3D" type="Camera3D" parent="Player/CameraPivot2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 3)
-script = ExtResource("5_2pxol")
-shakeReduction = 0.1
-
-[node name="Tables" type="Node3D" parent="."]
-
-[node name="Table1" parent="Tables" instance=ExtResource("1_hykti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
-
-[node name="Table2" parent="Tables" instance=ExtResource("1_hykti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
-
-[node name="Table3" parent="Tables" instance=ExtResource("1_hykti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
-
-[node name="Table4" parent="Tables" instance=ExtResource("1_hykti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
-
 [node name="Boundary" type="Node3D" parent="."]
+script = ExtResource("7_s1d1q")
 
 [node name="Ground" type="StaticBody3D" parent="Boundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -135,6 +111,29 @@ shape = SubResource("BoxShape3D_k7r0p")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Boundary/Ceiling"]
 mesh = SubResource("BoxMesh_7ptd3")
 
+[node name="Tables" type="Node3D" parent="."]
+
+[node name="Table1" parent="Tables" instance=ExtResource("1_hykti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+
+[node name="Table2" parent="Tables" instance=ExtResource("1_hykti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+
+[node name="Table3" parent="Tables" instance=ExtResource("1_hykti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="Table4" parent="Tables" instance=ExtResource("1_hykti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="Player" parent="." instance=ExtResource("1_1xadd")]
+
+[node name="CameraPivot2" type="Marker3D" parent="Player"]
+transform = Transform3D(0.953717, 0, 0.300706, 0, 1, 0, -0.300706, 0, 0.953717, 0, 0, 0)
+script = ExtResource("2_mlohh")
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraPivot2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 3)
+
 [node name="Lights" type="Node3D" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lights"]
@@ -146,7 +145,7 @@ transform = Transform3D(0.5, -0.75, -0.433013, 0, -0.5, 0.866025, -0.866025, -0.
 [node name="Timers" type="Node3D" parent="."]
 
 [node name="ShakeTimer" type="Timer" parent="Timers"]
-wait_time = 5.0
+wait_time = 2.0
 one_shot = true
 
 [node name="FallingTimer" type="Timer" parent="Timers"]

@@ -12,7 +12,7 @@ func reset_game():
 	$UserInterface/TimeLabel.text = "Elapsed Time: %ds" % elapsed_time
 	$UserInterface/LifeLabel.text = "Life: %d" % life
 	$UserInterface/Retry.hide()
-	$Timers/GameDurationTimer.wait_time = game_period+1
+	$Timers/GameDurationTimer.wait_time = game_period + 0.5
 	$Timers/GameDurationTimer.start(0)
 	$UserInterface/ElapsedTimer.start(0)
 	$Timers/FallingTimer.start(0)
@@ -27,7 +27,7 @@ func _on_falling_timer_timeout():
 
 	falling.position.x = randf_range(-6.0, 6.0)
 	falling.position.z = randf_range(-6.0, 6.0)
-	falling.position.y = 4
+	falling.position.y = 3.7
 	add_child(falling)
 
 func _on_elapsed_timer_timeout():
@@ -56,10 +56,10 @@ func _unhandled_input(event):
 		get_tree().reload_current_scene()
 
 func _on_shake_timer_timeout():
-	var wait_time = 3.0 + 3.0 * randf() # between 3 and 6 seconds
+	var wait_time = randf() # between 0 and 1second
 	var stress = 0.2 + 0.2 * randf()    # between 0.2 and 0.4
 	
 	$Timers/ShakeTimer.start(wait_time)
-	if game_period - elapsed_time <= 3:
+	if game_period - elapsed_time <= 2:
 		stress = -stress
-	$Player/CameraPivot2/Camera3D.add_stress(stress)
+	$Boundary.add_stress(stress)

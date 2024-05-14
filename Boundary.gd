@@ -1,4 +1,4 @@
-extends Camera3D
+extends Node3D
 
 @export var maxYaw : float = 25.0
 @export var maxPitch : float = 25.0
@@ -8,24 +8,21 @@ extends Camera3D
 var stress : float = 0.0
 var shake : float = 0.0
 
-var _camera_rotation_reset : Vector3 = Vector3()
-
+var _boundary_rotation_reset : Vector3 = Vector3()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if stress == 0.0:
-		_camera_rotation_reset = rotation_degrees
+		_boundary_rotation_reset = rotation_degrees
 
-	rotation_degrees = _processshake(_camera_rotation_reset, _delta)
-
+	rotation_degrees = _processshake(_boundary_rotation_reset, _delta)
 
 func _processshake(angle_center : Vector3, delta : float) -> Vector3:
-	shake = stress * stress
+	shake = stress * stress * 0.38
 
 	stress -= (shakeReduction / 100.0)
 	stress = clamp(stress, 0.0, 1.0)
@@ -35,7 +32,6 @@ func _processshake(angle_center : Vector3, delta : float) -> Vector3:
 	newRotate.y = maxPitch * shake * _get_noise(randi(), delta + 1.0)
 	newRotate.z = maxRoll * shake * _get_noise(randi(), delta + 2.0)
 	return angle_center + newRotate
-
 
 func _get_noise(noise_seed : float, time : float) -> float:
 	var n = FastNoiseLite.new()
@@ -47,7 +43,6 @@ func _get_noise(noise_seed : float, time : float) -> float:
 	# n.persistence = 0.8
 
 	return 1.0 * n.get_noise_1d(time)
-
 
 func add_stress(amount : float) -> void:
 	stress += amount
