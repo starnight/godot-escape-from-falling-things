@@ -1,5 +1,6 @@
 extends Node
 
+@export var game_period = 60
 @export var falling_scene: PackedScene
 
 var elapsed_time = 0
@@ -11,9 +12,11 @@ func reset_game():
 	$UserInterface/TimeLabel.text = "Elapsed Time: %ds" % elapsed_time
 	$UserInterface/LifeLabel.text = "Life: %d" % life
 	$UserInterface/Retry.hide()
+	$Timers/GameDurationTimer.wait_time = game_period+1
 	$Timers/GameDurationTimer.start(0)
 	$UserInterface/ElapsedTimer.start(0)
 	$Timers/FallingTimer.start(0)
+	_on_shake_timer_timeout()
 
 func _process(delta):
 	if Input.is_action_pressed("enter_game") and $UserInterface/Retry.visible:
@@ -33,6 +36,7 @@ func _on_elapsed_timer_timeout():
 
 func stop_game():
 	$Timers/FallingTimer.stop()
+	$Timers/ShakeTimer.stop()
 	$UserInterface/ElapsedTimer.stop()
 	$UserInterface/Retry/Label.text = "Press Enter to retry."
 	$UserInterface/Retry.show()
@@ -51,7 +55,11 @@ func _unhandled_input(event):
 		# This restarts the current scene.
 		get_tree().reload_current_scene()
 
-
 func _on_shake_timer_timeout():
-	%ShakeTimer.start(3.0 + 3.0 * randf())  # between 3 and 6 seconds
-	%Camera3D.add_stress(0.2 + 0.2 * randf())  # between 0.2 and 0.4
+	var wait_time = 3.0 + 3.0 * randf() # between 3 and 6 seconds
+	var stress = 0.2 + 0.2 * randf()    # between 0.2 and 0.4
+	
+	$Timers/ShakeTimer.start(wait_time)
+	if game_period - elapsed_time <= 3:
+		stress = -stress
+	$Player/CameraPivot2/Camera3D.add_stress(stress)

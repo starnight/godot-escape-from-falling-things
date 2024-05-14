@@ -61,7 +61,6 @@ transform = Transform3D(0.953717, 0, 0.300706, 0, 1, 0, -0.300706, 0, 0.953717, 
 script = ExtResource("2_mlohh")
 
 [node name="Camera3D" type="Camera3D" parent="Player/CameraPivot2"]
-unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 3)
 script = ExtResource("5_2pxol")
 shakeReduction = 0.1
@@ -147,9 +146,8 @@ transform = Transform3D(0.5, -0.75, -0.433013, 0, -0.5, 0.866025, -0.866025, -0.
 [node name="Timers" type="Node3D" parent="."]
 
 [node name="ShakeTimer" type="Timer" parent="Timers"]
-unique_name_in_owner = true
 wait_time = 5.0
-autostart = true
+one_shot = true
 
 [node name="FallingTimer" type="Timer" parent="Timers"]
 wait_time = 0.1
