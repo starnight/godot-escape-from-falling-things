@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://dc73l1rm1ebsg"]
+[gd_scene load_steps=20 format=3 uid="uid://dc73l1rm1ebsg"]
 
 [ext_resource type="PackedScene" uid="uid://b1qs0xiynwe8u" path="res://player.tscn" id="1_1xadd"]
 [ext_resource type="Script" path="res://main.gd" id="1_blrvs"]
 [ext_resource type="PackedScene" uid="uid://c0qkufevdka6i" path="res://table.tscn" id="1_hykti"]
 [ext_resource type="Script" path="res://CameraPivot2.gd" id="2_mlohh"]
 [ext_resource type="PackedScene" uid="uid://cdjenfp8kn6u2" path="res://falling_thing.tscn" id="4_yd8ee"]
+[ext_resource type="Script" path="res://Camera3D.gd" id="5_2pxol"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7ajaa"]
 size = Vector3(60, 1, 60)
@@ -60,7 +61,10 @@ transform = Transform3D(0.953717, 0, 0.300706, 0, 1, 0, -0.300706, 0, 0.953717, 
 script = ExtResource("2_mlohh")
 
 [node name="Camera3D" type="Camera3D" parent="Player/CameraPivot2"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 3)
+script = ExtResource("5_2pxol")
+shakeReduction = 0.1
 
 [node name="Tables" type="Node3D" parent="."]
 
@@ -142,6 +146,11 @@ transform = Transform3D(0.5, -0.75, -0.433013, 0, -0.5, 0.866025, -0.866025, -0.
 
 [node name="Timers" type="Node3D" parent="."]
 
+[node name="ShakeTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
+wait_time = 5.0
+autostart = true
+
 [node name="FallingTimer" type="Timer" parent="Timers"]
 wait_time = 0.1
 
@@ -206,6 +215,7 @@ grow_vertical = 2
 text = "Press Enter to start."
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="Timers/ShakeTimer" to="." method="_on_shake_timer_timeout"]
 [connection signal="timeout" from="Timers/FallingTimer" to="." method="_on_falling_timer_timeout"]
 [connection signal="timeout" from="Timers/GameDurationTimer" to="." method="_on_game_duration_timer_timeout"]
 [connection signal="timeout" from="UserInterface/ElapsedTimer" to="." method="_on_elapsed_timer_timeout"]
