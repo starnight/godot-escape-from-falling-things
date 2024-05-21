@@ -14,6 +14,11 @@ Earthquake is common in Taiwan.  So, people are taught how to reduce the damage 
 4. When the player's life is decreased to zero, it is game over!
 5. The player has 3 lives at beginning.  And, has to survive 60 seconds.
 
+## Controls
+
+* Move: Arrow keys
+* Rotate the view: WASD
+
 ## Reference
 
 * Table 3D model: https://free3d.com/3d-model/table-747735.html
