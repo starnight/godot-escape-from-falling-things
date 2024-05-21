@@ -10,6 +10,7 @@ on:
 
 env:
   GODOT_VERSION: 4.2.2
+  ITCH_GAME_ID: "earthquake"
 
 jobs:
   build:
@@ -30,3 +31,13 @@ jobs:
         run: |
           mkdir -v -p build/web
           godot --headless --verbose --export-release "Web" ./build/web/index.html
+
+      - name: Deploy to itch.io
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{secrets.BUTLER_API_KEY}}
+          itchUsername: ${{secrets.ITCH_USERNAME}}
+          itchGameId: ${{env.ITCH_GAME_ID}}
+          gameData: ./build/web
+          buildChannel: "webgl"
