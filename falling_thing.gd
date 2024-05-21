@@ -3,7 +3,7 @@ extends RigidBody3D
 var triggered = false
 
 func _process(delta):
-	if position.y < 1.1 and linear_velocity.y < 0.03 and !triggered:
+	if position.y < 0.3 and linear_velocity.y < 0.03 and !triggered:
 		triggered = true
 		$Timer.start(0)
 
